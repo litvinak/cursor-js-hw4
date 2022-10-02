@@ -6,18 +6,33 @@ const marks = [4, 5, 5, 3, 4, 5];
 
 let pairs = [];
 
-function makePair(arr) {
-    
-    const girls = arr.filter(name => name.slice(-1) === 'а');
-    const boys = arr.filter(name => name.slice(-1) !== 'а');
-    console.log(girls);
-    console.log(boys);
-    for (i = 0; i < boys.length; i++) {
-        pairs.push([girls[i], boys[i]])
-    }
-    
-    return pairs;
 
+
+function womanNames(name) {
+    return name.endsWith('а');
+}
+
+
+
+function makePair(arr) {
+    let manArr = [];
+    let womanArr = [];
+    let newArr = [];
+
+    for(let i = 0; i < arr.length; i++) {
+        let name = students[i];
+        if(womanNames(name)) {
+            womanArr.push(name);
+        } else {
+        manArr.push(name);
+
+    }
+    }
+
+    for(let i = 0; i < manArr.length; i++) {
+        newArr.push([manArr[i], womanArr[i]])
+    }
+    return newArr;
 }
 
 const pairsArr = makePair(students);
@@ -26,38 +41,51 @@ console.log(pairsArr);
 
 
 
-const pairsWithThemes = pairsArr.reduce((acc, curr, index) => {
-    acc[index] = {
-        pair: curr,
-        theme: themes[index]
-    };
-    return acc;
-}, []);
+function pairsWithThemes(arr) {
+    const pairsWithThemes = pairsArr.reduce((acc, curr, index) => {
+        acc[index] = {
+            pair: curr,
+            theme: themes[index]
+        };
+        return acc;
+    }, []);
+    
+    console.log(pairsWithThemes);
+}
 
-console.log(pairsWithThemes);
+pairsWithThemes();
 
 
-const marksStudents = students.reduce((acc, curr, index) => {
-    acc[index] = {
-        name: curr,
-        marks: marks[index]
-    };
-    return acc;
-}, []);
+function marksStudents(arr) {
+    const marksStudents = students.reduce((acc, curr, index) => {
+        acc[index] = {
+            name: curr,
+            marks: marks[index]
+        };
+        return acc;
+    }, []);
+    
+    console.log(marksStudents);
+}
 
-console.log(marksStudents);
+marksStudents();
+
+
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
 
 function randomMarks(arr) {
    
     let random = [];
-    let random2 = [];
+    let min = 1;
+    let max = 5;
 
-    for (let i = 0; i < pairsArr.length; i++) {
-        random.push(Math.floor(Math.random() * (5 - 1 + 1) + 1));
-        random2.push(pairsArr[i].concat(random[i]));
+    for (let i = 0; i < arr.length; i++) {
+        random.push(randomNumber(min, max));
     }
-    return random2;
+    return random;
 }
 
 console.log(randomMarks(pairsArr));
